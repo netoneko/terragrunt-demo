@@ -1,5 +1,9 @@
 dependency "eks" {
-    config_path = "${get_terragrunt_dir()}/../eks"
+  config_path = "${get_terragrunt_dir()}/../eks"
+}
+
+dependency "vpc" {
+  config_path = "../vpc"
 }
 
 generate "helm" {
@@ -26,6 +30,10 @@ provider "helm" {
       command     = "aws"
     }
   }
+}
+
+variable "public_subnets" {
+  default = ${jsonencode(dependency.vpc.outputs.public_subnets)}
 }
 EOF
 }

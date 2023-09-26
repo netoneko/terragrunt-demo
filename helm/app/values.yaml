@@ -36,22 +36,23 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# service:
+service:
+  annotations: {}
 #   type: LoadBalancer
 #   port: 5000
 
 ingress:
   enabled: false
-  className: ""
-  annotations: {}
-    kubernetes.io/ingress.class: alb
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    # - host: chart-example.local
-    - paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
+#   className: ""
+#   annotations: {}
+#     kubernetes.io/ingress.class: alb
+#     # kubernetes.io/tls-acme: "true"
+#   hosts:
+#     # - host: chart-example.local
+#     - paths:
+#         - path: /
+#           pathType: ImplementationSpecific
+#   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
