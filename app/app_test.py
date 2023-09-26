@@ -27,3 +27,7 @@ def runner(app):
 def test_request_example(client):
     response = client.get("/")
     assert b"Hello, World!" in response.data
+
+def test_request_ip(client):
+    response = client.get("/ip")
+    assert b"US" == response.data
