@@ -1,5 +1,5 @@
 dependency "eks" {
-    config_path = "./eks"
+    config_path = "${get_terragrunt_dir()}/../eks"
 }
 
 generate "helm" {

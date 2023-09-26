@@ -1,0 +1,8 @@
+image:
+  repository: kirillm/geoip
+  pullPolicy: Always
+  tag: v0.0.1
+
+service:
+  type: LoadBalancer
+  port: 5000

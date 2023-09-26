@@ -57,15 +57,3 @@ resource "helm_release" "lb" {
     value = var.cluster_name
   }
 }
-
-variable "vpc_id" {
-  type = string
-}
-
-variable "cluster_name" {
-  type = string
-}
-
-variable "iam_role_arn" {
-  type = string
-}
