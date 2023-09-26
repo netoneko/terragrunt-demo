@@ -11,3 +11,10 @@ map_public_ip_on_launch = true // unless enabled does not allow to create a node
 create_elasticache_subnet_group = false
 create_redshift_subnet_group = false
 create_database_subnet_group = false
+
+public_subnet_tags = {
+    "kubernetes.io/cluster/kirill-terragrunt-demo-vpc" =  "shared"
+    "kubernetes.io/role/internal-elb" = ""
+    "kubernetes.io/role/elb" = ""
+    "kubernetes.io/role/alb-ingress" = ""
+}
