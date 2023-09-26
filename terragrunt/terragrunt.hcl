@@ -23,6 +23,16 @@ terraform {
 EOF
 }
 
+generate "default_vars" {
+    path = "default_vars.tf"
+    if_exists = "overwrite_terragrunt"
+    contents = <<-EOF
+variable "region" {
+  type = string
+}
+EOF
+}
+
 terraform {
   extra_arguments "conditional_vars" {
     commands = [
