@@ -4,9 +4,7 @@ include "root" {
 }
 
 terraform {
-#   source = "../../terraform/vpc"
   source = "tfr:///terraform-aws-modules/vpc/aws?version=5.1.2"
-#   version = "5.1.2"
 }
 
 inputs = {

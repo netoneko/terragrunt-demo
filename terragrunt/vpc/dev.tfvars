@@ -9,6 +9,8 @@ enable_nat_gateway = true
 # enable_vpn_gateway = true
 
 tags = {
-    Terraform = "true"
-    Environment = "dev"
+    Name = "kirill"
+    Owner = "Nati"
+    Department = "DevOps"
+    Temp = "True"
 }
