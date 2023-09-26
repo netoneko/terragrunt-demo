@@ -13,8 +13,8 @@ create_redshift_subnet_group = false
 create_database_subnet_group = false
 
 public_subnet_tags = {
-    "kubernetes.io/cluster/kirill-terragrunt-demo-vpc" =  "shared"
-    "kubernetes.io/role/internal-elb" = ""
+    "kubernetes.io/cluster/kirill-terragrunt-demo-vpc" = "owned"
+    # "kubernetes.io/role/internal-elb" = ""
     "kubernetes.io/role/elb" = ""
     "kubernetes.io/role/alb-ingress" = ""
 }

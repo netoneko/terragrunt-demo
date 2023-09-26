@@ -7,8 +7,8 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: external
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    alb.ingress.kubernetes.io/subnets: subnet-0b468050dee551095,subnet-042846182dcafdf39,subnet-080b9a3334171fab2
-    alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0b468050dee551095,subnet-042846182dcafdf39,subnet-080b9a3334171fab2
+    # alb.ingress.kubernetes.io/tags: Environment=dev,Team=test,Name=Kirill
 spec:
   ports:
     - port: 80
