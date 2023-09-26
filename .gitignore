@@ -1,2 +1,6 @@
 .terragrunt-cache
 .terraform
+
+*.pyc
+__pycache__
+venv
