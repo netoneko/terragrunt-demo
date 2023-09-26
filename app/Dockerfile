@@ -8,4 +8,6 @@ WORKDIR /opt/app
 
 RUN pip3 install -r requirements.txt
 
-CMD flask run
+ADD . .
+
+CMD flask run --host 0.0.0.0
