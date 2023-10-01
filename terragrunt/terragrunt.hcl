@@ -57,24 +57,3 @@ terraform {
     # ]
   }
 }
-
-# generate "backend" {
-#   path      = "backend.tf"
-#   if_exists = "overwrite_terragrunt"
-#   contents = <<EOF
-# terraform {
-#   backend "s3" {
-#     bucket         = 
-#     key            = 
-#     region         = "us-east-2"
-#     encrypt        = true
-#     dynamodb_table = "kirill-terragrunt-demo-lock"
-#   }
-# }
-
-# variable "env" {
-#     type = string
-#     default = "${local.env}"
-# }
-# EOF
-# }

@@ -18,3 +18,8 @@ variable "values" {
   type = list(string)
   default = []
 }
+
+variable "templates" {
+  type = map
+  default = {}
+}

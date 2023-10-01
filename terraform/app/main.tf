@@ -6,6 +6,10 @@ locals {
       }
     }
   })
+
+  templates = yamlencode({
+    "templates" = var.templates
+  })
 }
 
 resource "helm_release" "app" {
@@ -17,7 +21,7 @@ resource "helm_release" "app" {
 
   values = concat(
     [for f in var.values: file(f)],
-    [local.elb_labels],
+    [local.elb_labels, local.templates],
   )
 }
 
