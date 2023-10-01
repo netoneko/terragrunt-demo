@@ -84,3 +84,6 @@ tolerations: []
 affinity: {}
 
 templates: {}
+
+mountConfig:
+  enabled: false

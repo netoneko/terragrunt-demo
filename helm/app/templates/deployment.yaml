@@ -47,6 +47,18 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{ if .Values.mountConfig.enabled }}
+          volumeMounts:
+            - name: {{ include "app.fullname" . }}
+              mountPath: {{ .Values.mountConfig.path }}
+              readOnly: true
+          {{ end }}
+      {{ if .Values.mountConfig.enabled }}
+      volumes:
+        - name: {{ include "app.fullname" . }}
+          configMap:
+            name: {{ include "app.fullname" . }}
+      {{ end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

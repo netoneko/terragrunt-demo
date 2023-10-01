@@ -17,5 +17,9 @@ ingress:
   hosts:
     - host: "*.amazonaws.com"
       paths:
-        - path: /
+        - path: /*
           pathType: ImplementationSpecific
+
+mountConfig:
+  enabled: true
+  path: /opt/app/templates
