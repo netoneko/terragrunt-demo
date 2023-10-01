@@ -24,3 +24,11 @@ resource "helm_release" "app" {
   )
 }
 
+data "kubernetes_service" "app" {
+  metadata {
+    name = var.helm_release_name
+    namespace = var.namespace
+  }
+
+  depends_on = [ helm_release.app ]
+}
