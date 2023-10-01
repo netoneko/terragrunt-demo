@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-ENV ECHO_INPUT="no input given"
+ENV ENV="default env"
 
 RUN apk add --no-cache python3 py3-pip
 

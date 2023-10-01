@@ -3,7 +3,7 @@ from geoip import open_database
 import os
 
 def get_client_ip_from_request(request):
-    return request.headers.get("X-Forwarded-For")
+    return request.headers.get("X-Forwarded-For", "stranger")
 
 
 def get_country_from_client_ip(geoip, client_ip):
@@ -13,6 +13,7 @@ def get_country_from_client_ip(geoip, client_ip):
             return match.country
     except Exception as e:
         app.logger.error(f"Could not resolve client ip {client_ip}, X-Forwarded-For request header might have incorrect value")
+    return "unknown"
 
 
 def get_input_from_request(request):
@@ -25,46 +26,22 @@ def get_input_from_request(request):
 def create_app():
     app = Flask(__name__)
     app.config.update({
-        "ECHO_INPUT": os.environ.get('ECHO_INPUT', "echo")
+        "ENV": os.environ.get('ENV', "echo")
     })
     geoip = open_database("./GeoLite2-Country.mmdb")
 
 
     @app.route("/")
-    def root():
-        return render_template("index.html", input=app.config.get("ECHO_INPUT"))
-
     @app.route("/index.html")
-    def index():
-        return render_template("index.html", input=app.config.get("ECHO_INPUT"))
-
-    @app.route("/ip")
-    def ip():
-        try:
-            client_ip = request.headers.get("X-Forwarded-For")
-            match = geoip.lookup(client_ip)
-            if match:
-                return match.country
-        except Exception as e:
-            app.logger.error(f"Could not resolve client ip {client_ip}, X-Forwarded-For request header might have incorrect value")
-
-        return "Not Available", 500
-
-
-    @app.route("/echo", methods=["POST"])
-    def echo():
+    def root():
         client_ip = get_client_ip_from_request(request)
-        result = {
-            'source': client_ip,
-            'input': get_input_from_request(request),
-            'country': get_country_from_client_ip(geoip, client_ip),
+        context = {
+            "client_ip": client_ip,
+            "country": get_country_from_client_ip(geoip, client_ip),
+            "env": app.config.get("ENV"),
         }
+        return render_template("index.html", **context)
 
-        if not result.get('input'):
-            result["error"] = 'Malformed or missing input'
-            return result, 500
-
-        return result
 
     return app
 

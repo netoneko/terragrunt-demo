@@ -2,6 +2,10 @@
 
 ## State file setup
 
+## Configuration
+
+**FIXME: need to pass ENV to the container**
+
 ## Testing
 
 ```
