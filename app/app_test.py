@@ -6,6 +6,7 @@ def app():
     app = create_app()
     app.config.update({
         "TESTING": True,
+        "ECHO_INPUT": "Hello, World!",
     })
 
     # other setup can go here
@@ -24,10 +25,16 @@ def client(app):
 def runner(app):
     return app.test_cli_runner()
 
-def test_request_example(client):
+def test_request_root(client):
     response = client.get("/")
     assert b"Hello, World!" in response.data
     assert 200 == response.status_code
+
+def test_request_index_html(client):
+    response = client.get("/index.html")
+    assert b"Hello, World!" in response.data
+    assert 200 == response.status_code
+
 
 def test_request_ip_without_header(client):
     response = client.get("/ip")
@@ -40,8 +47,8 @@ def test_request_ip_with_header(client):
     assert 200 == response.status_code
 
 def test_echo_with_correct_parameters(client):
-    response = client.post("/echo", headers={"X-Forwarded-For": "17.0.0.1"}, json={"input": "Hello, world!"})
-    assert {"country": "US", "input": "Hello, world!", "source": "17.0.0.1"} == response.json
+    response = client.post("/echo", headers={"X-Forwarded-For": "17.0.0.1"}, json={"input": "Hello, World!"})
+    assert {"country": "US", "input": "Hello, World!", "source": "17.0.0.1"} == response.json
     assert 200 == response.status_code
 
 def test_echo_without_input(client):
@@ -50,6 +57,6 @@ def test_echo_without_input(client):
     assert 500 == response.status_code
 
 def test_echo_with_header(client):
-    response = client.post("/echo", json={"input": "Hello, world!"})
-    assert {"country": None, "input": "Hello, world!", "source": None} == response.json
+    response = client.post("/echo", json={"input": "Hello, World!"})
+    assert {"country": None, "input": "Hello, World!", "source": None} == response.json
     assert 200 == response.status_code

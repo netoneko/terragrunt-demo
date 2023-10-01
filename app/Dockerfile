@@ -1,5 +1,7 @@
 FROM alpine:3.18
 
+ENV ECHO_INPUT="no input given"
+
 RUN apk add --no-cache python3 py3-pip
 
 ADD ./requirements.txt /opt/app/

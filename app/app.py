@@ -1,5 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, render_template_string, render_template
 from geoip import open_database
+import os
 
 def get_client_ip_from_request(request):
     return request.headers.get("X-Forwarded-For")
@@ -23,11 +24,19 @@ def get_input_from_request(request):
 
 def create_app():
     app = Flask(__name__)
+    app.config.update({
+        "ECHO_INPUT": os.environ.get('ECHO_INPUT', "echo")
+    })
     geoip = open_database("./GeoLite2-Country.mmdb")
 
+
     @app.route("/")
-    def hello():
-        return "Hello, World!"
+    def root():
+        return render_template("index.html", input=app.config.get("ECHO_INPUT"))
+
+    @app.route("/index.html")
+    def index():
+        return render_template("index.html", input=app.config.get("ECHO_INPUT"))
 
     @app.route("/ip")
     def ip():
