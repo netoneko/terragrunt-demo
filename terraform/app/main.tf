@@ -1,11 +1,8 @@
 locals {
   elb_labels = yamlencode({
-    "service" = {
+    "ingress" = {
       "annotations" = {
-        "labels.service.beta.kubernetes.io/aws-load-balancer-type" = "external"
-        "labels.service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-        "service.beta.kubernetes.io/aws-load-balancer-scheme" = "internet-facing"
-        "service.beta.kubernetes.io/aws-load-balancer-subnets" = join(",", var.public_subnets)
+        "alb.ingress.kubernetes.io/subnets" = join(",", var.public_subnets)
       }
     }
   })
@@ -24,7 +21,7 @@ resource "helm_release" "app" {
   )
 }
 
-data "kubernetes_service" "app" {
+data "kubernetes_ingress_v1" "app" {
   metadata {
     name = var.helm_release_name
     namespace = var.namespace

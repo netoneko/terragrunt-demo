@@ -1,8 +1,25 @@
+
+# hmmm???
+
 image:
   repository: kirillm/geoip
   pullPolicy: Always
   tag: v0.0.1
 
 service:
-  type: LoadBalancer
+  type: NodePort
   port: 5000
+
+ingress:
+  enabled: true
+  # className: alb
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  hosts:
+    - host: "*.amazonaws.com"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
