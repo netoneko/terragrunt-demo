@@ -3,8 +3,12 @@ include "root" {
   expose = true
 }
 
+# terraform {
+#   source = "tfr:///terraform-aws-modules/vpc/aws?version=5.1.2"
+# }
+
 terraform {
-  source = "tfr:///terraform-aws-modules/vpc/aws?version=5.1.2"
+  source    = "../../terraform/vpc"
 }
 
 inputs = {

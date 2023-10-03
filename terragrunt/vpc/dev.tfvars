@@ -8,13 +8,8 @@ public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 enable_nat_gateway = true
 map_public_ip_on_launch = true // unless enabled does not allow to create a node group in the public subnet
 
-create_elasticache_subnet_group = false
-create_redshift_subnet_group = false
-create_database_subnet_group = false
-
 public_subnet_tags = {
     "kubernetes.io/cluster/kirill-terragrunt-demo-vpc" = "owned"
-    # "kubernetes.io/role/internal-elb" = ""
     "kubernetes.io/role/elb" = ""
     "kubernetes.io/role/alb-ingress" = ""
 }

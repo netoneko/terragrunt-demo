@@ -30,6 +30,11 @@ generate "default_vars" {
 variable "region" {
   type = string
 }
+
+variable "tags" {
+  type = map(string)
+  default = {}
+}
 EOF
 }
 
