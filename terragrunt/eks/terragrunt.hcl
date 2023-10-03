@@ -7,8 +7,12 @@ dependency "vpc" {
   config_path = "../vpc"
 }
 
+# terraform {
+#   source = "tfr:///terraform-aws-modules/eks/aws?version=19.16.0"
+# }
+
 terraform {
-  source = "tfr:///terraform-aws-modules/eks/aws?version=19.16.0"
+  source    = "../../terraform/eks"
 }
 
 inputs = {
