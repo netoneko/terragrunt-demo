@@ -23,3 +23,7 @@ ingress:
 mountConfig:
   enabled: true
   path: /opt/app/templates
+
+environment:
+  - name: ENV
+    value: stage

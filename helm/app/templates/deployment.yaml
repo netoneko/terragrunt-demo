@@ -53,6 +53,10 @@ spec:
               mountPath: {{ .Values.mountConfig.path }}
               readOnly: true
           {{ end }}
+          {{- with .Values.environment }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{ if .Values.mountConfig.enabled }}
       volumes:
         - name: {{ include "app.fullname" . }}
