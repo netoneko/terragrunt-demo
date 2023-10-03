@@ -12,7 +12,7 @@ resource "aws_eks_cluster" "cluster" {
   ]
 }
 
-data "aws_iam_policy_document" "assume_role" {
+data "aws_iam_policy_document" "assume_role_eks" {
   statement {
     effect = "Allow"
 
@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "assume_role" {
 
 resource "aws_iam_role" "cluster" {
   name               = "${var.cluster_name}EKSClusterRole"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_eks.json
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
@@ -39,6 +39,8 @@ resource "aws_eks_addon" "addons" {
   for_each = var.cluster_addons
   cluster_name = aws_eks_cluster.cluster.name
   addon_name   = each.key
+
+  depends_on = [ aws_eks_node_group.node_group ]
 }
 
 resource "aws_eks_node_group" "node_group" {
@@ -67,9 +69,22 @@ resource "aws_eks_node_group" "node_group" {
   ]
 }
 
+data "aws_iam_policy_document" "assume_role_ec2" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 resource "aws_iam_role" "node_group" {
   name =  "${var.cluster_name}EKSNodeGroupRole"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_ec2.json
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
