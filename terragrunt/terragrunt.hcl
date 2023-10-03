@@ -31,6 +31,7 @@ variable "region" {
   type = string
 }
 
+## FIXME enable back
 variable "tags" {
   type = map(string)
   default = {}

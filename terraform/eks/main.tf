@@ -102,6 +102,18 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.node_group.name
 }
 
+data "tls_certificate" "tls_certificate" {
+  url = aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_openid_connect_provider" "oidc_provider" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = data.tls_certificate.tls_certificate.certificates[*].sha1_fingerprint
+  url             = aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+
+  tags = var.tags
+}
+
 resource "null_resource" "kubectl" {
   provisioner "local-exec" {
     command = "aws eks --region ${var.region} update-kubeconfig --name ${var.cluster_name}"

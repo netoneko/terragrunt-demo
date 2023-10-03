@@ -1,0 +1,25 @@
+image:
+  repository: kirillm/geoip
+  pullPolicy: Always
+  tag: v0.0.1
+
+service:
+  type: NodePort
+  port: 5000
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # we only enable HTTP since HTTPS was not in the scope
+  hosts:
+    - host: "*.amazonaws.com"
+      paths:
+        - path: /*
+          pathType: ImplementationSpecific
+
+mountConfig:
+  enabled: true
+  path: /opt/app/templates
